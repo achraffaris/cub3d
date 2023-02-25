@@ -5,6 +5,7 @@
 #include <mlx.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define ESC 53
 #define CLOSE 0
@@ -19,6 +20,9 @@
 #define RIGHT 123
 
 #define MAP_CELL_SIZE 32
+#define MAP_PLAYER_SIZE 8
+
+#define PLAYER_SPEED 8
 
 typedef struct image_s
 {
@@ -34,7 +38,9 @@ typedef struct player_s
 {
     int x;
     int y;
-    int direction;
+    int angleofview;
+    int x_end_line;
+    int y_end_line;
 }   player_t;
 
 typedef struct game_s
@@ -49,6 +55,8 @@ typedef struct game_s
 
     int             win_height; // map_height * cell_size 
     int             win_width;
+
+    
 
     int             floor_color; // use encode_color(int r, int g, int b);
     int             ceiling_color; // same

@@ -34,30 +34,30 @@ char    **createMap(void)
     char    **map;
     int i = 0;
     map = malloc(sizeof(char *) * 25);
-    map[i] = ft_strdup("11111111111111111111111111111111111111111111111"); i++;
-    map[i] = ft_strdup("10000000000000000000000000000000001000000000001"); i++;
-    map[i] = ft_strdup("10000000000001111000000000000000001000000100001"); i++;
-    map[i] = ft_strdup("10000000000001011000000000000000001000000100001"); i++;
-    map[i] = ft_strdup("10000000000001001000000000000000001000000100001"); i++;
-    map[i] = ft_strdup("10000000000001011000000000000000001000000100001"); i++;
-    map[i] = ft_strdup("10000000000000000000000000100000001000000100001"); i++;
-    map[i] = ft_strdup("10000000000001000000000000100000001000000100001"); i++;
-    map[i] = ft_strdup("10010000000001000000000000100000001000000100001"); i++;
-    map[i] = ft_strdup("10010000000001001100000000100000000000000100001"); i++;
-    map[i] = ft_strdup("10010000000001001100000000100000000000000100001"); i++;
-    map[i] = ft_strdup("10010000000001001100000000100000000000000100001"); i++;
-    map[i] = ft_strdup("10010000000001001100000000100000000000000100001"); i++;
-    map[i] = ft_strdup("10010000000001001100000000100000000000000100001"); i++;
-    map[i] = ft_strdup("10010000000001001100000000000000000000000100001"); i++;
-    map[i] = ft_strdup("10010000000001000000000000000000000000000100001"); i++;
-    map[i] = ft_strdup("10010000000001000000000000000000000000000100001"); i++;
-    map[i] = ft_strdup("10010000000000000000000000011100000000000100001"); i++;
-    map[i] = ft_strdup("10010000000000000000000000011100000000000100001"); i++;
-    map[i] = ft_strdup("10010000000000000000000000011100000000000100001"); i++;
-    map[i] = ft_strdup("10010000000000000000000000011100000000000100001"); i++;
-    map[i] = ft_strdup("10000000000000000000000000011100000000000100001"); i++;
-    map[i] = ft_strdup("10000000000000000000000000000000000000000000001"); i++;
-    map[i] = ft_strdup("11111111111111111111111111111111111111111111111"); i++;
+    map[i] = ft_strdup("111111111"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100100001"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("100000001"); i++;
+    map[i] = ft_strdup("111111111"); i++;
 
     map[i] = NULL;
     return (map);
@@ -94,9 +94,11 @@ player_t    *player_init(game_t *game)
     player_t *p;
 
     p = malloc(sizeof(player_t));
-    p->direction = NORTH;
+    p->angleofview = M_PI / 2;
     p->y = game->win_height / 2;
     p->x = game->win_width / 2;
+    p->x_end_line = cos(p->angleofview) * 30;
+    p->y_end_line = sin(p->angleofview) * 30;
     return (p);
 }
 
@@ -115,7 +117,7 @@ game_t  *game_init()
     // 
     game->wall_img = create_new_image(game->mlx, 0x1E90FF, MAP_CELL_SIZE);
     game->floor_img = create_new_image(game->mlx, 0xF5F5F5, MAP_CELL_SIZE);
-    game->player_img = create_new_image(game->mlx, 0xBBB, MAP_CELL_SIZE / 3);
+    game->player_img = create_new_image(game->mlx, 0xBBB, MAP_PLAYER_SIZE);
     game->player = player_init(game);
     // 
     return (game);
@@ -128,8 +130,8 @@ int main()
     g = game_init();
     render_2d_map(g);
     render_player(g);
+    render_line(g);
     mlx_hook(g->win, 2, 0, key_press, g);
-    mlx_hook(g->win, 3, 0, key_press, g);
     mlx_loop(g->mlx);
     return (0);
 }

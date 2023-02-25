@@ -74,5 +74,5 @@ void    render_2d_map(game_t *game)
 
 void    render_player(game_t *game)
 {
-    mlx_put_image_to_window(game->mlx, game->win, game->player_img->instance, game->player->x, game->player->y);
+    mlx_put_image_to_window(game->mlx, game->win, game->player_img->instance, game->player->x - (MAP_PLAYER_SIZE / 2), game->player->y - (MAP_PLAYER_SIZE / 2));
 }
