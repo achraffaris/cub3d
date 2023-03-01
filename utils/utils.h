@@ -38,9 +38,11 @@ typedef struct player_s
 {
     int x;
     int y;
-    int angleofview;
-    int x_end_line;
-    int y_end_line;
+    double angleofview;
+    double rotation_speed;
+    double x_end_line;
+    double y_end_line;
+
 }   player_t;
 
 typedef struct game_s
@@ -80,5 +82,8 @@ image_t     *create_new_image(void *mlx, int color, int block_dimensions);
 void        render_2d_map(game_t *game);
 void        render_player(game_t *game);
 int         key_press(int key_code, game_t *game);
+double         get_opposite(game_t *game, double hypotenuse);
+double         get_adjacent(game_t *game, double hypotenuse);
+double         degree_to_rad(double degree);
 
 #endif

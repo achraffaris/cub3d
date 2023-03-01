@@ -97,8 +97,9 @@ player_t    *player_init(game_t *game)
     p->angleofview = M_PI / 2;
     p->y = game->win_height / 2;
     p->x = game->win_width / 2;
-    p->x_end_line = cos(p->angleofview) * 30;
-    p->y_end_line = sin(p->angleofview) * 30;
+    p->x_end_line = p->x + (cos( p->angleofview) * 30);
+    p->y_end_line = p->y + (sin( p->angleofview) * 30);
+    p->rotation_speed = degree_to_rad(5);
     return (p);
 }
 
@@ -129,8 +130,10 @@ int main()
 
     g = game_init();
     render_2d_map(g);
-    render_player(g);
     render_line(g);
+    render_player(g);
+    printf("px = %d, py =%d\n", g->player->x, g->player->y);
+    printf("endx = %f, endy =%f\n", g->player->x_end_line, g->player->y_end_line);
     mlx_hook(g->win, 2, 0, key_press, g);
     mlx_loop(g->mlx);
     return (0);

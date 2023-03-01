@@ -6,7 +6,8 @@ AR = ar rc
 
 SRCS = main.c \
 		hooks.c \
-		utils/utils.c
+		utils/utils.c \
+		utils/calculations.c
 				
 OBJS = $(SRCS:.c=.o)
 

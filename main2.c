@@ -2,7 +2,7 @@
 #include <math.h>
 
 int main() {
-    int future_x = ceil((double)40 / 32);
+    int future_x = ceil((int)40 / 32);
     printf("%d\n", future_x); // Output: 3
     return 0;
 }
