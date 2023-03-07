@@ -1,139 +1,81 @@
 #include "cub3d.h"
 
-
-int ft_strlen(char *str)
+double      setup_player_direction(game_t *g)
 {
-    int i;
-
-    i = 0;
-    while (str && str[i])
-        i++;
-    return (i);
+    if (g->player_direction == SUD)
+        return (degree_to_rad(90));
+    else if (g->player_direction == WEST)
+        return (degree_to_rad(180));
+    else if (g->player_direction == EST)
+        return (degree_to_rad(0));
+    return (degree_to_rad(270));
 }
 
-char    *ft_strdup(char *str)
+int     is_player(char c)
 {
-    char    *dup;
-    int     i;
+    if (c == 'N' || c == 'E' || c == 'W' || c == 'S')
+        return (1);
+    return (0);
+}
+
+void    set_player_pos(game_t *g, int *x, int *y)
+{
+    int i;
+    int j;
 
     i = 0;
-    if (!str)
-        return (NULL);
-    dup = malloc(sizeof(char) * (ft_strlen(str) + 1));
-    while (str[i])
+    j = 0;
+    while (g->map[i])
     {
-        dup[i] = str[i];
+        while (g->map[i][j])
+        {
+            if (is_player(g->map[i][j]))
+            {
+                *x = j * MAP_CELL_SIZE;
+                *y = i * MAP_CELL_SIZE;
+                return ;
+            }
+            j++;
+        }
+        j = 0;
         i++;
     }
-    dup[i] = '\0';
-    return (dup);
 }
 
-char    **createMap(void)
-{
-    char    **map;
-    int i = 0;
-    map = malloc(sizeof(char *) * 25);
-    map[i] = ft_strdup("111111111"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100100001"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("100000001"); i++;
-    map[i] = ft_strdup("111111111"); i++;
-
-    map[i] = NULL;
-    return (map);
-}
-
-int mapSize(char **map)
-{
-    int i;
-
-    i = 0;
-    while (map[i])
-        i++;
-    return (i);
-}
-
-int lineSize(char **map)
-{
-    int max;
-    int i;
-
-    i = 0;
-    max = ft_strlen(map[i]);
-    while (map[i])
-    {
-        if (ft_strlen(map[i]) > max)
-            max = ft_strlen(map[i]);
-        i++;
-    }
-    return (max);
-}
-
-player_t    *player_init(game_t *game)
+player_t    *player_init(game_t *g)
 {
     player_t *p;
 
     p = malloc(sizeof(player_t));
-    p->angleofview = M_PI / 2;
-    p->y = game->win_height / 2;
-    p->x = game->win_width / 2;
-    p->x_end_line = p->x + (cos( p->angleofview) * 30);
-    p->y_end_line = p->y + (sin( p->angleofview) * 30);
-    p->rotation_speed = degree_to_rad(5);
+    p->rotation_angle = setup_player_direction(g);
+    set_player_pos(g, &p->pos.x, &p->pos.y);
     return (p);
 }
 
-
-game_t  *game_init()
+game_t  *game_init(game_t *g)
 {
-    game_t *game = malloc(sizeof(game_t));
-
-    game->mlx = mlx_init();
-    game->map = createMap();
-    game->map_height = mapSize(game->map);
-    game->map_width = lineSize(game->map);
-    game->win_height = game->map_height * MAP_CELL_SIZE;
-    game->win_width = game->map_width * MAP_CELL_SIZE;
-    game->win = mlx_new_window(game->mlx, game->win_width, game->win_height, "Cub3d");
-    // 
-    game->wall_img = create_new_image(game->mlx, 0x1E90FF, MAP_CELL_SIZE);
-    game->floor_img = create_new_image(game->mlx, 0xF5F5F5, MAP_CELL_SIZE);
-    game->player_img = create_new_image(game->mlx, 0xBBB, MAP_PLAYER_SIZE);
-    game->player = player_init(game);
-    // 
-    return (game);
+    g->mlx = mlx_init();
+    g->win_height = g->map_height * MAP_CELL_SIZE;
+    g->win_width = g->map_width * MAP_CELL_SIZE;
+    g->win = mlx_new_window(g->mlx, g->win_width, g->win_height, "Cub3d");
+    g->wall_img = create_new_image(g->mlx, 0xccc, MAP_CELL_SIZE);
+    g->floor_img = create_new_image(g->mlx, g->floor_color, MAP_CELL_SIZE);
+    g->player_img = create_new_image(g->mlx, 0xE96479, MAP_PLAYER_SIZE);
+    g->player = player_init(g);
+    return (g);
 }
 
-int main()
+int main(int ac, char **av)
 {
+    int     fd;
     game_t  *g;
 
-    g = game_init();
-    render_2d_map(g);
-    render_line(g);
-    render_player(g);
-    printf("px = %d, py =%d\n", g->player->x, g->player->y);
-    printf("endx = %f, endy =%f\n", g->player->x_end_line, g->player->y_end_line);
+    fd = primary_checks(ac, av[1]);
+    g = malloc(sizeof(game_t));
+    init_config_data(&g);
+    parse_file(fd, &g);
+    game_init(g);
+    render_2d(g);
     mlx_hook(g->win, 2, 0, key_press, g);
     mlx_loop(g->mlx);
     return (0);

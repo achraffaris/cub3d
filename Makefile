@@ -5,10 +5,32 @@ CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 AR = ar rc
 
 SRCS = main.c \
-		hooks.c \
-		utils/utils.c \
-		utils/calculations.c
-				
+		core/hooks.c \
+		core/movements.c \
+		core/calculations.c \
+		parsing/printer.c\
+		parsing/primaryChecks.c\
+		parsing/libft/ft_strdup.c\
+		parsing/libft/ft_strjoin.c\
+		parsing/libft/ft_substr.c\
+		parsing/libft/ft_strlen.c\
+		parsing/libft/ft_strcmp.c\
+		parsing/libft/ft_strchr.c\
+		parsing/libft/ft_strrchr.c\
+		parsing/libft/ft_strncmp.c\
+		parsing/libft/ft_split.c\
+		parsing/libft/ft_atoi.c\
+		parsing/parseFile.c\
+		parsing/parseMap.c\
+		parsing/getNextline.c\
+		parsing/parseUtils.c\
+		parsing/bluePrint/color.c\
+		parsing/bluePrint/textures.c\
+		parsing/leaksHunter.c\
+		parsing/inits.c\
+		map/render.c
+
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
