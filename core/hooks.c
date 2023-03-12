@@ -1,6 +1,6 @@
 #include "../cub3d.h"
 
-int    key_press(int key_code, game_t *g)
+int    key_press(int key_code, t_game *g)
 {
     if (key_code == ESC)
         exit(0);
@@ -15,5 +15,6 @@ int    key_press(int key_code, game_t *g)
     else if (key_code == LEFT || key_code == RIGHT)
         turn_player(g, key_code);
     render_2d(g);
+    g->player->rotation_angle = normalize_angle(g->player->rotation_angle);
     return (0);
 }

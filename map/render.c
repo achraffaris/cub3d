@@ -32,7 +32,7 @@ image_t *create_new_image(void *mlx, int color, int block_dimensions)
     return (image);
 }
 
-void    render_map(game_t *g)
+void    render_map(t_game *g)
 {
     int i;
     int j;
@@ -57,7 +57,7 @@ void    render_map(game_t *g)
     }
 }
 
-void    render_line(game_t *g, double angle)
+void    render_line(t_game *g, double angle)
 {
     int x;
     int y;
@@ -66,7 +66,12 @@ void    render_line(game_t *g, double angle)
     i = 0;
     x = g->player->pos.x;
     y = g->player->pos.y;
-    while (i <= 100)
+    
+    int distance = find_horizontal_intersection(g, angle);
+    if (distance < 0)
+        distance *= -1;
+    printf("distance = %d angle = %f \n", distance, angle);
+    while (i <= distance)
     {
         x = get_adjacent(angle, i);
         y = get_opposite(angle, i);
@@ -75,7 +80,7 @@ void    render_line(game_t *g, double angle)
     }
 }
 
-void    render_player(game_t *g)
+void    render_player(t_game *g)
 {
     mlx_put_image_to_window(g->mlx,
         g->win,
@@ -84,7 +89,7 @@ void    render_player(game_t *g)
         g->player->pos.y - (MAP_PLAYER_SIZE / 2));
 }
 
-void    render_2d(game_t *g)
+void    render_2d(t_game *g)
 {
     mlx_clear_window(g->mlx, g->win);
     render_map(g);

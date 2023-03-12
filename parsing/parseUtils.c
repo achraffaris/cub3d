@@ -6,7 +6,7 @@
 /*   By: afaris <afaris@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 00:58:59 by fchanane          #+#    #+#             */
-/*   Updated: 2023/03/07 12:05:39 by afaris           ###   ########.fr       */
+/*   Updated: 2023/03/10 19:38:06 by afaris           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool    empty_line(char *line)
     return true;
 }
 
-void    parse_config(char *line, game_t **g)
+void    parse_config(char *line, t_game **g)
 {
     int     start;
     int     end;

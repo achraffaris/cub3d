@@ -6,7 +6,7 @@
 /*   By: afaris <afaris@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 19:01:46 by fchanane          #+#    #+#             */
-/*   Updated: 2023/03/07 12:05:39 by afaris           ###   ########.fr       */
+/*   Updated: 2023/03/10 19:38:06 by afaris           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ char    *create_map(char *map, char *line)
     return (join);
 }
 
-void    check_player(char *map, game_t **g)
+void    check_player(char *map, t_game **g)
 {
     int i = 0;
-    game_t  *aux = *g;
+    t_game  *aux = *g;
 
     while (map[i])
     {
@@ -115,9 +115,9 @@ void    check_game_paths(char **map, int height, int width)
     }
 }
 
-void    parse_map(char *map, game_t **g)
+void    parse_map(char *map, t_game **g)
 {
-    game_t  *aux;
+    t_game  *aux;
 
     aux = *g;
     check_player(map, g);

@@ -6,15 +6,15 @@
 /*   By: afaris <afaris@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 00:41:35 by fchanane          #+#    #+#             */
-/*   Updated: 2023/03/07 15:52:56 by afaris           ###   ########.fr       */
+/*   Updated: 2023/03/10 19:38:06 by afaris           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void    raise_flag(int *flag, game_t **g)
+void    raise_flag(int *flag, t_game **g)
 {
-    game_t  *aux;
+    t_game  *aux;
 
     aux = *g;
     if (!aux->wall_east && !aux->wall_sud && !aux->wall_west && !aux->wall_nord)
@@ -24,7 +24,7 @@ void    raise_flag(int *flag, game_t **g)
     }
 }
 
-void    check_empty_file(char *line, game_t **g)
+void    check_empty_file(char *line, t_game **g)
 {
     if (!line)
     {
@@ -33,7 +33,7 @@ void    check_empty_file(char *line, game_t **g)
     }
 }
 
-void    parse_file(int fd, game_t **g)
+void    parse_file(int fd, t_game **g)
 {
     char    *line;
     int     stopper;
@@ -66,7 +66,7 @@ void    parse_file(int fd, game_t **g)
             line = get_next_line(fd);
         }
     }
-    game_t *aux;
+    t_game *aux;
     aux = *g;
     char    *map = ft_strdup("");
     if (line)

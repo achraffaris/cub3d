@@ -6,7 +6,7 @@
 /*   By: afaris <afaris@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:55:44 by fchanane          #+#    #+#             */
-/*   Updated: 2023/03/07 12:05:39 by afaris           ###   ########.fr       */
+/*   Updated: 2023/03/10 19:38:06 by afaris           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ int check_color(char **colors)
     return (color);
 }
 
-void    colors_parameters(char *content, game_t **g)
+void    colors_parameters(char *content, t_game **g)
 {
     int     i;
     int     color;
     char    **colors;
-    game_t  *aux;
+    t_game  *aux;
 
     i = 1;
     aux = *g;

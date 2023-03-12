@@ -48,7 +48,7 @@ typedef struct image_s
 typedef struct player_s
 {
     point_t     pos;
-    double      rotation_angle; // left most ray which is (FIELD_OF_VUE - direction / 2)
+    double      rotation_angle;
 }   player_t;
 
 
@@ -82,16 +82,18 @@ typedef struct game_s
 
 
     player_t        *player; // actor
-}   game_t;
+}   t_game;
 
-int         key_press(int key_code, game_t *g);
+int         key_press(int key_code, t_game *g);
 
 double      get_opposite(double angle, double hypotenuse);
 double      get_adjacent(double angle, double hypotenuse);
 double      degree_to_rad(double degree);
+double      get_hypoteneuse(double angle, double adjacent);
+
 
 //                  Movements
-int         valid_movement(game_t *g, int x, int y);
-void        turn_player(game_t *g, int key_code);
+int         valid_movement(t_game *g, int x, int y);
+void        turn_player(t_game *g, int key_code);
 
 #endif

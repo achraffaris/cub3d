@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-double      setup_player_direction(game_t *g)
+double      setup_player_direction(t_game *g)
 {
     if (g->player_direction == SUD)
         return (degree_to_rad(90));
@@ -18,7 +18,7 @@ int     is_player(char c)
     return (0);
 }
 
-void    set_player_pos(game_t *g, int *x, int *y)
+void    set_player_pos(t_game *g, int *x, int *y)
 {
     int i;
     int j;
@@ -33,6 +33,7 @@ void    set_player_pos(game_t *g, int *x, int *y)
             {
                 *x = j * MAP_CELL_SIZE;
                 *y = i * MAP_CELL_SIZE;
+                g->map[i][j] = '0';
                 return ;
             }
             j++;
@@ -42,17 +43,18 @@ void    set_player_pos(game_t *g, int *x, int *y)
     }
 }
 
-player_t    *player_init(game_t *g)
+player_t    *player_init(t_game *g)
 {
     player_t *p;
 
     p = malloc(sizeof(player_t));
     p->rotation_angle = setup_player_direction(g);
+    p->rotation_angle -= ANGLE_OF_VUE / 2;
     set_player_pos(g, &p->pos.x, &p->pos.y);
     return (p);
 }
 
-game_t  *game_init(game_t *g)
+t_game  *game_init(t_game *g)
 {
     g->mlx = mlx_init();
     g->win_height = g->map_height * MAP_CELL_SIZE;
@@ -68,13 +70,21 @@ game_t  *game_init(game_t *g)
 int main(int ac, char **av)
 {
     int     fd;
-    game_t  *g;
+    t_game  *g;
 
     fd = primary_checks(ac, av[1]);
-    g = malloc(sizeof(game_t));
+    g = malloc(sizeof(t_game));
     init_config_data(&g);
     parse_file(fd, &g);
     game_init(g);
+    for (size_t i = 0; g->map[i]; i++)
+    {
+        for (size_t j = 0; g->map[i][j]; j++)
+        {
+            printf("'%c'", g->map[i][j]);
+        }
+        printf("\n");
+    }
     render_2d(g);
     mlx_hook(g->win, 2, 0, key_press, g);
     mlx_loop(g->mlx);

@@ -28,7 +28,11 @@ SRCS = main.c \
 		parsing/bluePrint/textures.c\
 		parsing/leaksHunter.c\
 		parsing/inits.c\
-		map/render.c
+		map/render.c\
+		raycasting/raycating.c\
+		raycasting/vertical.c\
+		raycasting/utils.c\
+		raycasting/horizontal.c\
 
 
 OBJS = $(SRCS:.c=.o)

@@ -1,8 +1,8 @@
 #include "parser.h"
 
-void    init_config_data(game_t **g)
+void    init_config_data(t_game **g)
 {
-    game_t  *aux;
+    t_game  *aux;
 
     aux = *g;
     aux->wall_east = NULL;

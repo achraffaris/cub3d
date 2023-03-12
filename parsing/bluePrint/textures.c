@@ -6,7 +6,7 @@
 /*   By: afaris <afaris@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:10:39 by fchanane          #+#    #+#             */
-/*   Updated: 2023/03/07 15:41:38 by afaris           ###   ########.fr       */
+/*   Updated: 2023/03/10 19:38:06 by afaris           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void    check_valid_path(char *content)
     check_xpm(content);
 }
 
-void    assign_texture(char *texture, char *direct, game_t **g)
+void    assign_texture(char *texture, char *direct, t_game **g)
 {
-    game_t  *aux;
+    t_game  *aux;
 
     aux = *g;
     if (!ft_strncmp(direct, "NO", 2))
@@ -78,7 +78,7 @@ void    assign_texture(char *texture, char *direct, game_t **g)
     }
 }
 
-void    textures_parameters(char *content, game_t **g)
+void    textures_parameters(char *content, t_game **g)
 {
     int     i;
     char    *direct;
